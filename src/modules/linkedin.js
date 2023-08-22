@@ -1,30 +1,39 @@
-/*CONSTANTES DE VALOR*/
-const EXISTS_NUMBER = `5511958681942`;
-const NOM_EXISTS_NUMBER = `5511958681945`;
-const DATA_DIR = `./data_dir`;
-
 /*IMPORTACOES*/
 const puppeteer = require("puppeteer");
 
 /*FUNCOES UTILITARIAS*/
 const { delay } = require('../utils/f_delay.js');
+const { CONSTS } = require('../../env.js');
+
+/*CONSTANTES DE VALOR*/
+const CONST = CONSTS();
 
 (async () => {
     //instancia o navegador
     const browser = await puppeteer.launch({
-        userDataDir: DATA_DIR,
+        userDataDir: CONST.DATA_DIR,
         headless: false,
     });
     //abre uma nova aba
     const page = await browser.newPage();
     //navega para a pagina
-    await page.goto(`https://wa.me/${NOM_EXISTS_NUMBER}`);
-    //tita print
-    await page.screenshot({path: './assets/example.png'})
-    //clica no botao de de iniicar conversa
-    await page.click(`#action-button`)
-    //aguarda um tmepo antes de fechar o navegador
-    // await delay(2000);
-    //fecha navegador
-    // await browser.close();
+    await page.goto(CONST.linkedin_url);
+
+    //executa js no contexto da pagina e retorna informacoes
+    const img_info = await page.evaluate(() => {
+        //busca pela imagem que contem o preview do usuario
+        const img = document.querySelector('img.evi-image.ember-view.profile-photo-edit__preview')
+        //filtra apenas as informacoes desejadas
+        const img_info = {
+            src: img.getAttribute('src')
+        }
+        //retorna as informacoes da imagem
+        return (img_info);
+    })
+
+    console.log({message: `Informacoes sobre a imagem`, img_info })
+
+    //fecha o navegador
+    await browser.close();
+
 })();
