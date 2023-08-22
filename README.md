@@ -4,6 +4,12 @@ Estarei usando esse repositório para realizar pequenas automações de mídias 
 ## Como executar o projeto
 - Utilize o comando ```npm install``` para baixar as dependencias
 
+## Serviços disponibilizados
+- ´´´/linkedin/batch/url´´´
+  - Propósito: a partir de uma lista de urls, devolver o link de perfil de cada uma
+  - método da requisição: Post
+  - parâmetro esperado: (array de string) url_list
+
 ## Bibliotecas Utilizadas
 - Express
   - Comando para instalação: ```npm install express```
