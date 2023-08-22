@@ -18,3 +18,9 @@ Estarei usando esse repositório para realizar pequenas automações de mídias 
   - Propósito: Fazer automações a nível de web scrapping
   - Dicas de material para consultar:
     - [Como criar um robô que faz login e da like? | Robô com JavaScript, NodeJS e Puppeteer](https://www.youtube.com/watch?v=Ltdp9-ZTAzM)
+- Nodemon
+  - Comando para instalação: ```npm install -g nodemon```
+  - [Documentação](https://www.npmjs.com/package/nodemon)
+  - Propósito: Automatizar a execução do projeto enquanto estiver em desenvolvimento
+  - Dicas de material para consultar:
+    - [Curso de Node.js - Nodemon #09](https://www.youtube.com/watch?v=u3MrPxq_RyA)
