@@ -41,15 +41,15 @@ async function consulta_simple(){
     })
 }
 
-async function consulta_batch(){
+async function consulta_batch({url_list}){
     //instancia o navegador
     const cluster = await Cluster.launch({
         puppeteerOptions: {
-            headless: false,
+            headless: 'new',
             userDataDir: CONST.DATA_DIR,
         },
         concurrency: Cluster.CONCURRENCY_PAGE,
-        maxConcurrency: 2,
+        maxConcurrency: 15,
     });
 
     //onde sao armazenadas as respostas
@@ -76,15 +76,15 @@ async function consulta_batch(){
         array_data.push({ url, data})
     });
 
-    //paginas em fila
-    cluster.queue(`https://www.linkedin.com/in/cesar-august/`);
-    cluster.queue(`https://www.linkedin.com/in/cesar-august/`);
+    //percorre a lista de url
+    url_list.forEach((url, index_url) => {
+        //adiciona a url a fila
+        cluster.queue(url)
+    })
 
     //encerra execucao
     await cluster.idle();
     await cluster.close();
-
-    console.log(array_data)
 
     //retornas os dados
     return array_data;

@@ -8,7 +8,7 @@ const linkedinController = new LinkedinController();
 
 //cricao das rotas
 router_linkedin.get("/simple/:metodo_busca", linkedinController.simple);
-router_linkedin.get("/batch/:metodo_busca", linkedinController.batch)
+router_linkedin.post("/batch/:metodo_busca", linkedinController.batch)
 
 //exporta as rotas
 module.exports = router_linkedin;

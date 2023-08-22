@@ -7,6 +7,9 @@ const CONST = CONSTS();
 
 //criacao do servidor
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded());
+
 const router_root = require("./routes/router_root");
 const router_linkedin = require("./routes/router_linkedin");
 
