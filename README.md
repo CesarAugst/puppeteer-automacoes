@@ -13,6 +13,7 @@ Estarei usando esse repositório para realizar pequenas automações de mídias 
     - [Curso de Node.js - Rotas #07](https://www.youtube.com/watch?v=UMI7kFwmAHo)
     - [Curso de Node.js - Parâmetros #08](https://www.youtube.com/watch?v=G9b-Zi0rg3o)
     - [Curso de Node.js - Grupo de rotas no Express.js #32](https://www.youtube.com/watch?v=ROL4ylHN47g)
+    - [#01 Routes | Controllers | Express | NodeJS - Separando Routes e Controllers na API Rest Express](https://www.youtube.com/watch?v=vNo3iyfAhMA&t=93s)
 - Puppeteer
   - Comando para instalação: ```npm install puppeteer```
   - [Documentação](https://www.npmjs.com/package/puppeteer)
