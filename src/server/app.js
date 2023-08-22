@@ -1,20 +1,19 @@
 //importacoes
 const express = require("express");
-const { CONSTS } = require('../../env.js');
+const { CONSTS } = require('../../env');
 
 /*CONSTANTES DE VALOR*/
 const CONST = CONSTS();
 
 //criacao do servidor
 const app = express();
+const router_root = require("./routes/router_root");
+const router_linkedin = require("./routes/router_linkedin");
 
 /*ROTAS*/
-app.get("/", (req, res) => {
-    res.send("Projeto de automação Puppeteer!")
-})
-app.get("/linkedin/:metodo_busca", (req, res) => {
-    res.send(`Projeto Linkedin usando ${req.params.metodo_busca}`)
-})
+app.use(`/linkedin`, router_linkedin);
+app.use(`/`, router_root);
+
 
 //expoe o servico na porta indicada
 app.listen(CONST.HTTP_PORT, () => console.log(`App executando e disponível na porta ${CONST.HTTP_PORT}`));
