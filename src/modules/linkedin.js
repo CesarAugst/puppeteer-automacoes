@@ -62,14 +62,21 @@ async function consulta_batch({url_list}){
 
         //executa js no contexto da pagina e retorna informacoes
         const data = await page.evaluate(() => {
-            //busca pela imagem que contem o preview do usuario
-            const img = document.querySelector('img.evi-image.ember-view.profile-photo-edit__preview')
-            //filtra apenas as informacoes desejadas
-            const img_info = {
-                src: img.getAttribute('src')
+            //informacoes obtidas na pagina
+            const url_info = {};
+
+            //inicia tentativa de obtencao de dados
+            try{
+                //busca pela imagem que contem o preview do usuario
+                const img = document.querySelector('img.evi-image.ember-view.profile-photo-edit__preview')
+                //filtra apenas as informacoes desejadas
+                url_info.src = img.getAttribute('src')
+            }catch (e){
+                url_info.error = 'Não foi possível obter a imagem'
             }
+
             //retorna as informacoes da imagem
-            return (img_info);
+            return (url_info);
         })
 
         //adiciona os dados consultados ao array de dados
