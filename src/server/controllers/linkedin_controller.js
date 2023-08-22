@@ -1,11 +1,18 @@
 /*importacoes*/
-const consulta_por_url = require("../../modules/linkedin");
+const {consulta_simple, consulta_batch} = require("../../modules/linkedin");
 
 class LinkedinController {
-    async index(req, res){
-        const dados = await consulta_por_url();
+    async simple(req, res){
+        const dados = await consulta_simple();
 
-        console.log({message: `dados` , dados })
+        res.status(200).json({
+            status: 'success',
+            dados
+        })
+    }
+
+    async batch(req, res){
+        const dados = await consulta_batch();
 
         res.status(200).json({
             status: 'success',

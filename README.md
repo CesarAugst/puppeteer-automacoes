@@ -20,6 +20,11 @@ Estarei usando esse repositório para realizar pequenas automações de mídias 
   - Propósito: Fazer automações a nível de web scrapping
   - Dicas de material para consultar:
     - [Como criar um robô que faz login e da like? | Robô com JavaScript, NodeJS e Puppeteer](https://www.youtube.com/watch?v=Ltdp9-ZTAzM)
+- Puppeteer Cluester
+  - Comando para instalação: ```npm install puppeteer-cluster```
+  - [Documentação](https://www.npmjs.com/package/puppeteer-cluster)
+  - Dicas de material para consultar:
+    - [Scale your application with Puppeteer-Cluster (NodeJS Tutorial)](https://www.youtube.com/watch?v=NcPJD2ofYG8)
 - Nodemon
   - Comando para instalação: ```npm install -g nodemon```
   - [Documentação](https://www.npmjs.com/package/nodemon)
