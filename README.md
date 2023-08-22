@@ -3,6 +3,7 @@ Estarei usando esse repositório para realizar pequenas automações de mídias 
 
 ## Como executar o projeto
 - Utilize o comando ```npm install``` para baixar as dependencias
+- na raiz do
 
 ## Serviços disponibilizados
 - ```/linkedin/batch/url```
