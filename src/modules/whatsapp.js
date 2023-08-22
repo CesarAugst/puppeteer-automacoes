@@ -7,7 +7,7 @@ const DATA_DIR = `./data_dir`;
 const puppeteer = require("puppeteer");
 
 /*FUNCOES UTILITARIAS*/
-const { delay } = require('./src/utils/f_delay.js');
+const { delay } = require('../utils/f_delay.js');
 
 (async () => {
     //instancia o navegador
