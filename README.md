@@ -11,6 +11,7 @@ Estarei usando esse repositório para realizar pequenas automações de mídias 
   - Propósito: Tornar a aplicação acessível por meio de requisições HTTP rest
   - Dicas de material para consultar:
     - [Curso de Node.js - Rotas #07](https://www.youtube.com/watch?v=UMI7kFwmAHo)
+    - [Curso de Node.js - Parâmetros #08](https://www.youtube.com/watch?v=G9b-Zi0rg3o)
 - Puppeteer
   - Comando para instalação: ```npm install puppeteer```
   - [Documentação](https://www.npmjs.com/package/puppeteer)
