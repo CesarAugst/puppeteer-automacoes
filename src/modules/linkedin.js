@@ -45,7 +45,7 @@ async function consulta_batch({url_list}){
     //instancia o navegador
     const cluster = await Cluster.launch({
         puppeteerOptions: {
-            headless: 'new',
+            headless: false,
             userDataDir: CONST.DATA_DIR,
         },
         concurrency: Cluster.CONCURRENCY_PAGE,
@@ -68,9 +68,9 @@ async function consulta_batch({url_list}){
             //inicia tentativa de obtencao de dados
             try{
                 //busca pela imagem que contem o preview do usuario
-                const img = document.querySelector('img.evi-image.ember-view.profile-photo-edit__preview')
+                const img = document.querySelectorAll('img.evi-image.ember-view')
                 //filtra apenas as informacoes desejadas
-                url_info.src = img.getAttribute('src')
+                url_info.src = img[1].getAttribute('src')
             }catch (e){
                 url_info.error = 'Não foi possível obter a imagem'
             }
