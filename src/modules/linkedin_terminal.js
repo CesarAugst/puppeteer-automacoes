@@ -5,81 +5,51 @@ const { Cluster } = require("puppeteer-cluster");
 const Stealth = require('puppeteer-extra-plugin-stealth');//permitou rastrear sites com cloud flare protection habilitado
 const randomUseragent = require('random-useragent');
 
-/*FUNCOES UTILITARIAS*/
-const { delay } = require('../utils/f_delay.js');
-const { CONSTS } = require('../../env.js');
-
 /*CONSTANTES DE VALOR*/
-const proxy = 'zproxy.lum-superproxy.io:22225';
-const username = 'lum-customer-hl_492cf951-zone-brasil';
-const password = 'q2k0zn2fabn4';
-const CONST = CONSTS();
+const CONST = {
+    //geral
+    DATA_DIR: `./data_dir`,
+    //proxy
+    proxy: 'zproxy.lum-superproxy.io:22225',
+    proxy_user: 'lum-customer-hl_492cf951-zone-brasil',
+    proxy_password: 'q2k0zn2fabn4',
+};
+const args= [
+    CONST.proxy ??`--proxy-server=${CONST.proxy}`,
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-infobars',
+    '--no-zygote',
+    '--no-first-run',
+    '--window-size=1920x1080',
+    '--window-position=0,0',
+    '--ignore-certificate-errors',
+    '--ignore-certificate-errors-skip-list',
+    '--disable-dev-shm-usage',
+    '--disable-accelerated-2d-canvas',
+    '--disable-gpu',
+    '--hide-scrollbars',
+    '--disable-notifications',
+    '--disable-background-timer-throttling',
+    '--disable-backgrounding-occluded-windows',
+    '--disable-breakpad',
+    '--disable-component-extensions-with-background-pages',
+    '--disable-extensions',
+    '--disable-features=TranslateUI,BlinkGenPropertyTrees',
+    '--disable-ipc-flooding-protection',
+    '--disable-renderer-backgrounding',
+    '--enable-features=NetworkService,NetworkServiceInProcess',
+    '--force-color-profile=srgb',
+    '--metrics-recording-only',
+    '--mute-audio',
+];
 const options = {
     headless: false,
     userDataDir: CONST.DATA_DIR,
-    args: [
-        //`--proxy-server=${proxy}`,
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-infobars',
-        '--no-zygote',
-        '--no-first-run',
-        '--window-size=1920x1080',
-        '--window-position=0,0',
-        '--ignore-certificate-errors',
-        '--ignore-certificate-errors-skip-list',
-        '--disable-dev-shm-usage',
-        '--disable-accelerated-2d-canvas',
-        '--disable-gpu',
-        '--hide-scrollbars',
-        '--disable-notifications',
-        '--disable-background-timer-throttling',
-        '--disable-backgrounding-occluded-windows',
-        '--disable-breakpad',
-        '--disable-component-extensions-with-background-pages',
-        '--disable-extensions',
-        '--disable-features=TranslateUI,BlinkGenPropertyTrees',
-        '--disable-ipc-flooding-protection',
-        '--disable-renderer-backgrounding',
-        '--enable-features=NetworkService,NetworkServiceInProcess',
-        '--force-color-profile=srgb',
-        '--metrics-recording-only',
-        '--mute-audio',
-    ]
+    args
 };
-async function consulta_simple(){
-    //instancia o navegador
-    const browser = await vanillaPuppeteer.launch({
-        userDataDir: CONST.DATA_DIR,
-        headless: 'new'
-    });
-    //abre uma nova aba
-    const page = await browser.newPage();
-    //navega para a pagina
-    await page.goto(CONST.linkedin_url);
 
-    //executa js no contexto da pagina e retorna informacoes
-    const img_info = await page.evaluate(() => {
-        //busca pela imagem que contem o preview do usuario
-        const img = document.querySelector('img.evi-image.ember-view.profile-photo-edit__preview')
-        //filtra apenas as informacoes desejadas
-        const img_info = {
-            src: img.getAttribute('src')
-        }
-        //retorna as informacoes da imagem
-        return (img_info);
-    })
-
-    //fecha o navegador
-    await browser.close();
-
-    return({
-        message: `Informacoes sobre a imagem`,
-        img_info
-    })
-}
-
-async function consulta_batch({url_list}){
+(async () => {
     const puppeteer = addExtra(vanillaPuppeteer);
     puppeteer.use(Stealth());
     //instancia o navegador
@@ -117,11 +87,14 @@ async function consulta_batch({url_list}){
         await page.setUserAgent(UA);
 
         // Authenticate our proxy with username and password defined above
-        //await page.authenticate({ username, password });
+        if(CONST.proxy_user && CONST.proxy_password){
+            const username = CONST.proxy_user;
+            const password = CONST.proxy_password;
+            await page.authenticate({ username, password });
+        }
 
         //navega para a pagina
         await page.goto(url);
-
 
         //executa js no contexto da pagina e retorna informacoes
         const data = await page.evaluate(() => {
@@ -147,6 +120,13 @@ async function consulta_batch({url_list}){
         array_data.push({ url, data})
     });
 
+    const url_list = [];
+    for(let i=2; i<process.argv.length; ++i) {
+        let params = process.argv[i].split(';');
+        let url = params[0]
+        url_list.push(url);
+    }
+
     //percorre a lista de url
     url_list.forEach((url, index_url) => {
         //adiciona a url a fila
@@ -158,7 +138,5 @@ async function consulta_batch({url_list}){
     await cluster.close();
 
     //retornas os dados
-    return array_data;
-};
-
-module.exports = {consulta_simple, consulta_batch};
+    console.log(JSON.stringify(array_data));
+})();
