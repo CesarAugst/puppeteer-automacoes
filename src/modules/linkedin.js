@@ -18,7 +18,7 @@ const options = {
     headless: false,
     userDataDir: CONST.DATA_DIR,
     args: [
-        //`--proxy-server=${proxy}`,
+        `--proxy-server=${proxy}`,
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-infobars',
@@ -117,7 +117,7 @@ async function consulta_batch({url_list}){
         await page.setUserAgent(UA);
 
         // Authenticate our proxy with username and password defined above
-        //await page.authenticate({ username, password });
+        await page.authenticate({ username, password });
 
         //navega para a pagina
         await page.goto(url);

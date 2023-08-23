@@ -4,18 +4,15 @@ const { addExtra } = require('puppeteer-extra');
 const { Cluster } = require("puppeteer-cluster");
 const Stealth = require('puppeteer-extra-plugin-stealth');//permitou rastrear sites com cloud flare protection habilitado
 const randomUseragent = require('random-useragent');
+const constants = require("constants");
 
 /*CONSTANTES DE VALOR*/
 const CONST = {
     //geral
     DATA_DIR: `./data_dir`,
-    //proxy
-    proxy: 'zproxy.lum-superproxy.io:22225',
-    proxy_user: 'lum-customer-hl_492cf951-zone-brasil',
-    proxy_password: 'q2k0zn2fabn4',
 };
+
 const args= [
-    CONST.proxy ??`--proxy-server=${CONST.proxy}`,
     '--no-sandbox',
     '--disable-setuid-sandbox',
     '--disable-infobars',
@@ -43,8 +40,16 @@ const args= [
     '--metrics-recording-only',
     '--mute-audio',
 ];
+if(false){
+    //constantes
+    CONST.proxy = 'zproxy.lum-superproxy.io:22225';
+    CONST.proxy_user = 'lum-customer-hl_492cf951-zone-brasil';
+    CONST.proxy_password = 'q2k0zn2fabn4';
+    //argumentos
+    args.push(`--proxy-server=${CONST.proxy}`)
+}
 const options = {
-    headless: false,
+    headless: 'new',
     userDataDir: CONST.DATA_DIR,
     args
 };
@@ -84,7 +89,7 @@ const options = {
         const UA = randomUseragent.getRandom(function (ua) {
             return (ua.deviceType === '') && parseFloat(ua.browserVersion) >= 20;
         });
-        await page.setUserAgent(UA);
+        //await page.setUserAgent(UA);
 
         // Authenticate our proxy with username and password defined above
         if(CONST.proxy_user && CONST.proxy_password){
@@ -120,12 +125,7 @@ const options = {
         array_data.push({ url, data})
     });
 
-    const url_list = [];
-    for(let i=2; i<process.argv.length; ++i) {
-        let params = process.argv[i].split(';');
-        let url = params[0]
-        url_list.push(url);
-    }
+    const url_list = process.argv[2].split(';');
 
     //percorre a lista de url
     url_list.forEach((url, index_url) => {
