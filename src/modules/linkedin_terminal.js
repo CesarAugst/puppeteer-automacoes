@@ -42,9 +42,9 @@ const args= [
 ];
 if(false){
     //constantes
-    CONST.proxy = 'zproxy.lum-superproxy.io:22225';
-    CONST.proxy_user = 'lum-customer-hl_492cf951-zone-brasil';
-    CONST.proxy_password = 'q2k0zn2fabn4';
+    CONST.proxy = 'URL_PROXY:PORTA_PROXY';
+    CONST.proxy_user = 'USER_PROXY';
+    CONST.proxy_password = 'SENHA_PROXY';
     //argumentos
     args.push(`--proxy-server=${CONST.proxy}`)
 }
